@@ -18,21 +18,20 @@ Output: ["()"]
 Link: https://leetcode.com/problems/generate-parentheses
 '''
 
-def backtrack(ans,n, S = [], left = 0, right = 0):
+class Solution:
+    def generateParenthesis(self, n: int) -> list[str]:
+        ans = []
+        def backtrack(S = [], left = 0, right = 0):
             if len(S) == 2 * n:
                 ans.append("".join(S))
                 return
             if left < n:
                 S.append("(")
-                backtrack(S, left+1, right,ans)
+                backtrack(S, left+1, right)
                 S.pop()
             if right < left:
                 S.append(")")
-                backtrack(S, left, right+1,ans)
+                backtrack(S, left, right+1)
                 S.pop()
-
-class Solution:
-    def generateParenthesis(self, n: int) -> list[str]:
-        ans = []
-        backtrack(ans,n,[],0,0)
+        backtrack()
         return ans
