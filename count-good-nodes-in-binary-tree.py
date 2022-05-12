@@ -21,3 +21,15 @@ class Solution:
             return self.helper(root.left,max_val) + self.helper(root.right,max_val)
         else:
             return self.helper(root.left,root.val) + self.helper(root.right,root.val)+1
+
+    def goodNodes2(self, root: TreeNode) -> int:
+        if not root: return 0
+        self.res = 0
+
+        def sol_rec(cur, val):
+            if cur.val >= val: self.res += 1
+            if cur.left: sol_rec(cur.left, max(val, cur.val))
+            if cur.right: sol_rec(cur.right, max(val, cur.val))
+
+        sol_rec(root, root.val)
+        return self.res
