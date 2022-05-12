@@ -21,3 +21,12 @@ class Solution:
             
         return root
             
+    def invertTree2(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+        temp = self.invertTree(root.right)
+        root.right = self.invertTree(root.left)
+        root.left = temp
+        
+        return root
+        
