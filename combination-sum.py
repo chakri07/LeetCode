@@ -52,4 +52,26 @@ class Solution:
                 self.helper(curr_sum,curr,target,output,nums)
                 n = curr.pop()
                 curr_sum = curr_sum - n 
-        
+
+    def combinationSum2(self, candidates: list[int], target: int) -> list[list[int]]:
+        def helper(candidates, target,till,ans):
+            s = sum(till)
+            if s == target:
+                output = till[:]
+                output.sort()
+                if  output not in ans:
+                    ans.append(output)
+                return
+            if s > target:
+                return 
+            if s < target:
+                for num in candidates:
+                    till.append(num)
+                    helper(candidates,target,till,ans)
+                    till.pop()
+                    
+        ans = []
+        helper(candidates,target,[],ans)
+            
+        return ans
+                    
