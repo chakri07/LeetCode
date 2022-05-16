@@ -15,14 +15,14 @@ Link: https://leetcode.com/problems/longest-palindromic-substring/
 
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        if len(s) ==0 :return ""
-        start =0 
+        if len(s) == 0 :return ""
+        start = 0 
         end = 0
         for i in range(0,len(s)):
             len1 = self.helper(s,i,i)
             len2 = self.helper(s,i,i+1)
             len_ans = max(len1,len2)
-            if ( len_ans > end - start):
+            if (len_ans > end - start):
                 start = i - (len_ans - 1)//2
                 end = i + len_ans//2
         return s[start:end+1]
