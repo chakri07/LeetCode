@@ -12,7 +12,6 @@ Output: "bb"
 
 Link: https://leetcode.com/problems/longest-palindromic-substring/
 '''
-
 class Solution:
     def longestPalindrome(self, s: str) -> str:
         if len(s) == 0 :return ""
@@ -29,7 +28,7 @@ class Solution:
             
     
     def helper(self,s:str,left:int,right:int)-> int:
-        while(left >=0 and right<len(s) and s[left]==s[right]):
+        while(left >= 0 and right < len(s) and s[left]==s[right]):
             left = left-1
             right = right+1
         return right-left-1
