@@ -23,3 +23,24 @@ Input: coins = [1], amount = 0
 Output: 0
 '''
 
+class Solution:
+    def coinChange(self, coins: list[int], amount: int) -> int:
+        dp = [float('inf')] * (amount+1)
+        dp[0] = 0
+        coin_set = set(coins)
+
+        for i in range(1,amount+1):
+            
+            if i in coin_set:
+                dp[i] = 1
+                continue
+            else:
+                for coin in coin_set:
+                    if coin > i:
+                        continue
+                    if dp[i-coin] != float('inf'):
+                        dp[i] = min(dp[i-coin]+1, dp[i])
+
+        if dp[-1] == float('inf'):
+            return -1
+        return dp[-1]
