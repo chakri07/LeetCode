@@ -34,7 +34,7 @@ class Solution:
         for r in range(0,len(s)):
             counts[s[r]]+=1
             if counts[s[r]] > max_val:
-                max_val = counts[s[r]]
+                max_val = max(counts.values())
             while r-l + 1 - (max_val) > k:
                 counts[s[l]]-=1
                 l = l + 1
