@@ -20,6 +20,9 @@ The substring "BBBB" has the longest repeating letters, which is 4.
 https://leetcode.com/problems/longest-repeating-character-replacement/
 '''
 
+import collections
+
+
 class Solution:
     def characterReplacement(self, s, k):     
         

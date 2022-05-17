@@ -19,13 +19,12 @@ Link: https://leetcode.com/problems/jump-game/
 
 class Solution:
     def canJump(self, nums: list[int]) -> bool:
-        dp = [False] * len(nums)
-        dp[0] = True
-        for index,val in enumerate(nums):
-            if dp[index]: 
-                for j in range(1,val+1):
-                    if index + j < len(nums):
-                        dp[index+ j] = True
-                    else:
-                        return True
-        return dp[len(nums)-1]
+        n = len(nums)
+        dp = [False] * n
+        dp[n-1] = True
+        for i in range(n-2, -1, -1):
+            for j in range(i+1, min(n, i+nums[i]+1)):
+                if dp[j]:
+                    dp[i] = True
+                    break
+        return dp[0]
