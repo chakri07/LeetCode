@@ -29,8 +29,7 @@ class Solution:
         dp[0] = 0
         coin_set = set(coins)
 
-        for i in range(1,amount+1):
-            
+        for i in range(1,amount+1):   
             if i in coin_set:
                 dp[i] = 1
                 continue

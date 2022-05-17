@@ -25,8 +25,7 @@ class Solution:
         stack = []
         n = len(temperatures)
         ans = [0] * n 
-        
-        
+
         for day,val in enumerate(temperatures):
             while stack and temperatures[stack[-1]] < val:
                 prev_day = stack.pop()

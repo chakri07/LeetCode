@@ -20,3 +20,30 @@ Output: []
 
 https://leetcode.com/problems/binary-tree-right-side-view/
 '''
+
+# Definition for a binary tree node.
+from typing import Optional
+
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> list[int]:
+        if root == None:
+            return []
+        
+        right = []
+        def helper(root,level):
+            if level == len(right):
+                right.append(root.val)
+            if root.right:
+                helper(root.right,level+1)
+            if root.left:
+                helper(root.left,level+1)
+            
+        helper(root,0)
+        return right
+
