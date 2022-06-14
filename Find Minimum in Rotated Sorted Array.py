@@ -41,6 +41,7 @@ def findMin(self, nums: list[int]) -> int:
             left = mid + 1
         else:
             right = mid
+            
         if nums[mid] > nums[mid+1]:
             return nums[mid+1]
         

@@ -52,9 +52,7 @@ class Solution:
             board[row][col] = value
             
             return result
-            
-        
-        
+             
         for i in range(nr_row):
             for j in range(nr_col):
                 if dfs(i, j, 0):

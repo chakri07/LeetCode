@@ -27,12 +27,10 @@ Explanation: The answer [[-2,4],[3,3]] would also be accepted.
 
 class Solution:
     def kClosest(self, points: list[list[int]], k: int) -> list[list[int]]:
+        # we can use a min heap
         def squared_distance(self, point: list[int]) -> int:
-        # """Calculate and return the squared Euclidean distance."""
             return point[0] ** 2 + point[1] ** 2
-        # Sort the list with a custom comparator function
         points.sort(key=squared_distance)
-        # Return the first k elements of the sorted list
         return points[:k]
     
     
