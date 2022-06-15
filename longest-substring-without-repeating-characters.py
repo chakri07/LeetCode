@@ -26,20 +26,22 @@ https://leetcode.com/problems/longest-substring-without-repeating-characters
 # try and use a map 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        if s == "":
+        if len(s) == 0:
             return 0
+        chars = set()
         l = 0 
-        r = 1
-        
-        ans = 1
-        while r < len(s):
-            curr = s[r]
-            if curr in s[l:r]:
-                while curr in s[l:r] and l <r:
-                    l = l + 1
+        res = 0 
+        for r in range(len(s)):
+            if s[r] not in chars:
+                chars.add(s[r])
+            else:
+                while s[r] in chars:
+                    chars.remove(s[l])
+                    l= l + 1
+                chars.add(s[r])
+                
+            res = max(res,r-l + 1)
             
-            ans  = max(r-l+1,ans)
-            r = r + 1
-            
-        return ans
+        return res
+                
             

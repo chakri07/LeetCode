@@ -11,3 +11,9 @@ https://leetcode.com/problems/word-break/
 https://leetcode.com/problems/longest-palindromic-substring/
 
 https://leetcode.com/problems/regular-expression-matching/
+
+https://leetcode.com/problems/lru-cache/
+
+https://leetcode.com/problems/longest-substring-without-repeating-characters/
+
+https://leetcode.com/problems/string-to-integer-atoi/

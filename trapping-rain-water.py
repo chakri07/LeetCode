@@ -17,6 +17,9 @@ Output: 9
 https://leetcode.com/problems/trapping-rain-water
 '''
 
+from typing import List
+
+
 class Solution:
     def trap(self, h: list[int]) -> int:
         left = [0] * len(h)
@@ -43,3 +46,26 @@ class Solution:
             ans = ans + (min(left[i],right[i])-h[i])
             
         return ans
+    
+    
+# constant space solution.w
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        left_max = height[0]
+        right_max = height[-1]
+        l = 0 
+        r = len(height) - 1
+        area = 0
+        while(l <r):
+            if height[l] < height[r]:
+                l+=1 
+                left_max = max(left_max,height[l])
+                area = area + (left_max - height[l])
+                
+            else:
+                r-=1
+                right_max = max(right_max,height[r])
+                area = area + (right_max - height[r])
+                
+        return area
+        
