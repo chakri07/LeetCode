@@ -35,19 +35,32 @@ class TreeNode:
         
 class Solution:
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
-        ans = root.val
-        def helper(root):
-            nonlocal ans
-            if not root:
-                return 0 
-            left = max(helper(root.left),0)
-            right = max(helper(root.right),0)
-            
-            ans = max(ans, root.val + left + right)
-            return root.val + max(left,right)
+        self.ans = float('-inf')
+        self.helper(root)
+        return self.ans
         
+    def helper(self,root):
         if not root:
             return 0
-        helper(root)
-        return ans
-            
+        left = max(self.helper(root.left),0)
+        right = max(self.helper(root.right),0)
+        self.ans = max(self.ans,left+ right + root.val)
+        return max(left,right) + root.val
+        
+        
+# why is this not working?
+class Solution:
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        s = [float('-inf')] 
+        self.helper(root,s)
+        return s[0]
+        
+    def helper(self,root,s):
+        if not root:
+            return 0
+        left = max(self.helper(root.left,s),0)
+        right = max(self.helper(root.right,s),0)
+        s[0] = max(s[0],left+ right + root.val)
+        return max(left,right) + root.val
+        
+        
