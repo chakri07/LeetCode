@@ -47,8 +47,6 @@ class Solution:
         self.ans = max(self.ans,left+ right + root.val)
         return max(left,right) + root.val
         
-        
-# why is this not working?
 class Solution:
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
         s = [float('-inf')] 
