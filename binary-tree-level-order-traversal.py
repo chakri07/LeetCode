@@ -22,7 +22,7 @@ https://leetcode.com/problems/binary-tree-level-order-traversal/
 
 
 # Definition for a binary tree node.
-from collections import defaultdict
+import collections
 from typing import List, Optional
 
 
@@ -34,14 +34,18 @@ class TreeNode:
         
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        level_map = defaultdict(list)
-        def helper(root,level):
-            if not root:
-                return
-            level_map[level].append(root.val)
-            helper(root.left,level+1)
-            helper(root.right,level+1)
+        ans = collections.defaultdict(list)
+        self.helper(root,0,ans)
+        return list(ans.values())
+          
+    def helper(self,root,level,ans):
+        if not root:
+            return
+        if level in ans:
+            ans[level].append(root.val)
+        else:
+            ans[level] = [root.val]
             
-        helper(root,0)
-        return level_map.values()
-            
+        if root:
+            self.helper(root.left,level+1,ans)
+            self.helper(root.right,level+1,ans)
