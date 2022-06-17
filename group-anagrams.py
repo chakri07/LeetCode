@@ -20,6 +20,10 @@ Output: [["a"]]
 
 '''
 
+# sorting approach
+import collections
+from typing import List
+
 
 class Solution:
     def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
@@ -33,4 +37,17 @@ class Solution:
                 ans_map[temp] =[s]
                 
         return ans_map.values()
-                                                                                
+                  
+                  
+# solve by counting elements
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        ans_map = collections.defaultdict(list)
+        for s in strs:
+            count = [0] * 26
+            for char in s:
+                count[ord(char)- ord('a')] += 1
+                
+            ans_map[tuple(count)].append(s)
+            
+        return ans_map.values()
