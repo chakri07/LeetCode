@@ -48,7 +48,7 @@ class Solution:
         return ans
     
     
-# constant space solution.w
+# constant space solution.
 class Solution:
     def trap(self, height: List[int]) -> int:
         left_max = height[0]
