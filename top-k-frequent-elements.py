@@ -13,17 +13,35 @@ Input: nums = [1], k = 1
 Output: [1]
 '''
 
+import collections
 import heapq
+from typing import List
 
-
+# heap takes only constant space O(1)
 class Solution:
-    def topKFrequent(self, nums: list[int], k: int) -> list[int]:
-        freq_map = {}
-        for num in nums:
-            if num in freq_map:
-                freq_map[num] +=1 
-            else:
-                freq_map[num] = 1
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        freq_map = collections.defaultdict(int)
         
-        return heapq.nlargest(k,freq_map.keys(),key= freq_map.get)
+        for num in nums:
+            freq_map[num] +=1 
+            
+        heap = [(freq_map[nums[0]],nums[0])]
+        heapq.heapify(heap)
+        
+        
+        for key,val in list(freq_map.items())[1:]:
+            if len(heap) < k:
+                heapq.heappush(heap,(val,key))
+            else:
+                min_val,min_key = heap[0]
+                if val > min_val:
+                    heapq.heappop(heap)
+                    heapq.heappush(heap,(val,key))
+        ans = []
+        for tup in heap:
+            ans.append(tup[1])
+            
+            
+        return ans
+        
         

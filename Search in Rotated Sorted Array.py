@@ -33,7 +33,6 @@ def search(self, a, t):
             
             if a[m] == t:
                 return m
-            
             # if l to m is sorted.
             if a[l] <= a[m]:    
                 # check t exists between l, m
