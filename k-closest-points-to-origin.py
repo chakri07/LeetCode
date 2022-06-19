@@ -23,15 +23,40 @@ Input: points = [[3,3],[5,-1],[-2,4]], k = 2
 Output: [[3,3],[-2,4]]
 Explanation: The answer [[-2,4],[3,3]] would also be accepted.
 
+https://leetcode.com/problems/k-closest-points-to-origin/
 '''
 
+import heapq
+from typing import List
+
+
 class Solution:
-    def kClosest(self, points: list[list[int]], k: int) -> list[list[int]]:
-        # we can use a min heap
-        def squared_distance(self, point: list[int]) -> int:
-            return point[0] ** 2 + point[1] ** 2
-        points.sort(key=squared_distance)
-        return points[:k]
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        if len(points) ==0:
+            return []
+        heap = [(self.dist(points[0]),points[0])]
+        heapq.heapify(heap)
+        
+        for p in points[1:]:
+            p_dist = self.dist(p)
+            if len(heap) < k:
+                heapq.heappush(heap,(p_dist,p))
+            else:
+                
+                if p_dist > heap[0][0]:
+                    heapq.heappop(heap)
+                    heapq.heappush(heap,(p_dist,p))
+        ans = []
+        for tup in heap:
+            ans.append(tup[1])
+            
+        return ans
+        
+        
+    def dist(self,p):
+        x = p[0]
+        y = p[1]
+        return -1 * (x*x + y*y)
     
     
         
