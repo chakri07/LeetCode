@@ -34,6 +34,7 @@ class Solution:
             dp[2] = 1
         result = dp[2]
         temp = result
+        
         for i in range(3,len(nums)):
             if nums[i]- nums[i-1] == nums[i-1]-nums[i-2]:
                 dp[i] = dp[i-1]+1

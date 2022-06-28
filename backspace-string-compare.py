@@ -77,7 +77,7 @@ def backspaceCompare2(self, s: str, t: str) -> bool:
                 continue
         else:
             ans2  = ans2 + char
-    print(ans2)
+    # print(ans2)
     return (ans2 == ans1)
 
 

@@ -46,6 +46,6 @@ class Solution:
         else:
             ans[level] = [root.val]
             
-        if root:
-            self.helper(root.left,level+1,ans)
-            self.helper(root.right,level+1,ans)
+    
+        self.helper(root.left,level+1,ans)
+        self.helper(root.right,level+1,ans)
