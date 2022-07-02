@@ -37,11 +37,8 @@ Constraints:
 At most 2 * 104 calls will be made to push and pop.
 It is guaranteed that there will be at least one element in the stack before calling pop.
 
-https://leetcode.com/problems/maximum-frequency-stack/'''
-
-
-
-
+https://leetcode.com/problems/maximum-frequency-stack/
+'''
 
 import collections
 

@@ -27,7 +27,8 @@ Input: head = [1], pos = -1
 Output: false
 Explanation: There is no cycle in the linked list.
 
-https://leetcode.com/problems/linked-list-cycle'''
+https://leetcode.com/problems/linked-list-cycle
+'''
 
 
 # Definition for singly-linked list.
