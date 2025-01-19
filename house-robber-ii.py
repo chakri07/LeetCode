@@ -44,5 +44,4 @@ class Solution:
             return dp[-1]
         
         
-        
         return max(helper(nums[:-1]),helper(nums[1:]))

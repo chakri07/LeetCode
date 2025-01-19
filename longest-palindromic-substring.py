@@ -12,6 +12,7 @@ Output: "bb"
 
 Link: https://leetcode.com/problems/longest-palindromic-substring/
 '''
+## Two pointers approach.
 class Solution:
     def longestPalindrome(self, s: str) -> str:
         if len(s) == 0: return ""
