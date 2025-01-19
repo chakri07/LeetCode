@@ -43,19 +43,15 @@ class ListNode:
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        if head == None or head.next == None or head.next.next == None:
+        if not head or not head.next or not head.next.next:
             return False
         p1 = head.next
         p2 = head.next.next
         while p1 and p2:
             if p1 == p2:
                 return True
-            if p1.next:
-                p1 = p1.next
-            else:
-                p1 = None
-            if p2.next and p2.next.next:
-                p2 = p2.next.next
-            else:
-                p2 = None
+            p1 = p1.next
+            if not p2.next:
+                return False
+            p2 = p2.next.next
         return False
