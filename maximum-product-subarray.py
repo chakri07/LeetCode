@@ -30,8 +30,7 @@ class Solution:
         curr = pos = neg = nums[0]
         result = nums[0]
         
-        for num in nums[1:]:
-            curr = num
+        for curr in nums[1:]:
             temp_max = max(curr, pos * curr, neg * curr)
             neg = min(curr,pos * curr,neg * curr)
             pos = temp_max
