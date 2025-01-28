@@ -35,20 +35,6 @@ class TreeNode:
         
 class Solution:
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
-        self.ans = float('-inf')
-        self.helper(root)
-        return self.ans
-        
-    def helper(self,root):
-        if not root:
-            return 0
-        left = max(self.helper(root.left),0)
-        right = max(self.helper(root.right),0)
-        self.ans = max(self.ans,left+ right + root.val)
-        return max(left,right) + root.val
-        
-class Solution:
-    def maxPathSum(self, root: Optional[TreeNode]) -> int:
         s = [float('-inf')] 
         self.helper(root,s)
         return s[0]
