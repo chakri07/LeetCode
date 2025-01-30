@@ -32,6 +32,52 @@ All prerequisite pairs are unique.
 
 https://neetcode.io/problems/course-schedule
 """
+## BFS
+
+from collections import defaultdict, deque
+class Solution(object):
+    def canFinish(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: bool
+        """
+        
+        # make adj list 
+        adjList = defaultdict(int)
+        depsList = defaultdict(list)
+        for cou,pre in prerequisites:
+            adjList[cou] += 1
+            depsList[pre].append(cou)
+
+        queue = deque([])
+        for c in range(0,numCourses):
+            if adjList[c] ==0:
+                queue.append(c)
+        
+        # for cycle detection
+        visited = set()
+        
+        while queue:
+            c = queue.popleft()
+            # means already in cycle.
+            if c in visited:
+                return False
+
+            visited.add(c)
+            for child in depsList[c]:
+                adjList[child] -= 1
+                if adjList[child] == 0:
+                    # adding courses with no pre-reqs left
+                    queue.append(child)
+        
+        for c in adjList:
+            if not adjList[c] == 0:
+                return False
+        
+        return True
+
+
 
 # DFS :
 from collections import defaultdict
