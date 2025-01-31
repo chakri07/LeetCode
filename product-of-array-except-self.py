@@ -61,7 +61,12 @@ class Solution:
         
         for i in range(1,len(nums)):
             ans[i] = ans[i-1] * nums[i-1]
-            
+        
+        # for left we did not need a new variable 
+        # to keep track for right though 
+        # we need a variable to keep up the product
+        # and we keep multiplying the current ans with 
+        # the product.
         r = 1
         for i in reversed(range(n)):
             ans[i] = ans[i] * r
