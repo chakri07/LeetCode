@@ -32,6 +32,30 @@ class TreeNode:
         self.left = None
         self.right = None
 
+## Most simplest
+class Solution(object):
+
+    def lowestCommonAncestor(self, root, p, q):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: TreeNode
+        """
+        if root is None:
+            return None
+        if (root == p) or (root == q):
+            return root
+        
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+
+        if left and right:
+            return root
+
+        return left if left else right
+
+
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         return self.helper(root,p,q,{})
