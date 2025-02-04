@@ -21,10 +21,51 @@ Output: []
 https://leetcode.com/problems/binary-tree-right-side-view/
 '''
 
+# Level order traversal solution
+# BFS
+ 
+from collections import deque
+class Solution(object):
+    def rightSideView(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: List[int]
+        """
+        if not root:
+            return []
+        queue = deque()
+        queue.append(root)
+
+        # bfs
+        child_queue = deque()
+        level = []
+        temp = []
+        while queue:
+            node  = queue.popleft()
+            temp.append(node.val)
+            if node.right:
+                child_queue.append(node.right)
+            if node.left:
+                child_queue.append(node.left)
+            
+            if len(queue) == 0:
+                queue = child_queue
+                level.append(temp[:])
+                child_queue = deque()
+                temp = []
+        
+        ans = []
+
+        for lev in level:
+            ans.append(lev[0])
+
+        return ans
+
+
 # Definition for a binary tree node.
 from typing import Optional
 
-
+# DFS
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
