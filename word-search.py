@@ -24,6 +24,58 @@ Output: false
 Link:https://leetcode.com/problems/word-search/
 '''
 
+# Backtracking DFS
+# Dont forget to remove the element which is not part of the word.
+
+from collections import deque
+class Solution(object):
+    def exist(self, board, word):
+        """
+        :type board: List[List[str]]
+        :type word: str
+        :rtype: bool
+        """
+        rows = len(board)
+        cols = len(board[0])
+
+        def dfs(r,c,word,visited):
+            if len(word) == 1:
+                if board[r][c] == word[0]:
+                    return True
+                else:
+                    return False
+
+            if not board[r][c] == word[0]:
+                return False
+
+            visited.add((r,c))
+            
+            neighbours = [(1,0),(0,1),(-1,0),(0,-1)]
+
+            for dr,dc in neighbours:
+                nr,nc = r+dr,c+dc
+
+                if 0 <= nr < rows and 0 <= nc < cols \
+                    and (nr,nc) not in visited:
+                        if dfs(nr,nc,word[1:],visited):
+                            return True
+            # Dont forget this step 
+            # if this is false this can be part of the word later 
+            # so we should mark it as non visited
+            # if true we dont need to do this since 
+            # the letter is in the word and should n't be visited again
+            visited.remove((r,c))
+            
+            return False
+
+        for r in range(rows):
+            for c in range(cols):
+                if dfs(r,c,word,set()):
+                    return True
+        
+        return False
+
+
 class Solution:
     def exist(self, board: list[list[str]], word: str) -> bool:
         """
