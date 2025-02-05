@@ -43,6 +43,7 @@ https://leetcode.com/problems/lru-cache/
 
 class Node:
     def __init__(self,key,val):
+        # double linked list
         self.key ,self.val = key,val
         self.prev = self.next = None
 
@@ -82,3 +83,90 @@ class LRUCache:
             lru = self.left.next
             self.remove(lru)
             del self.cache[lru.key]
+
+## Similar implementation
+
+class Node:
+    def __init__(self,key=0,value=0):
+        self.key,self.value = key,value
+        self.prev = self.next = None
+
+class LRUCache(object):
+
+    def __init__(self, capacity):
+        """
+        :type capacity: int
+        """
+        self.map = {}
+        self.head = Node()
+        self.tail = Node()
+        self.capacity = capacity
+
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        
+
+    def get(self, key):
+        """
+        :type key: int
+        :rtype: int
+        """
+        if key in self.map:
+            curr_node = self.map[key]
+
+            before,after = curr_node.prev, curr_node.next
+
+            before.next = after
+            after.prev = before
+
+            self.__insertAtHead__(curr_node)
+            return self.map[key].value
+        else:
+            return -1
+
+
+    def put(self, key, value):
+        """
+        :type key: int
+        :type value: int
+        :rtype: None
+        """
+        if key in self.map:
+            self.map[key].value = value
+            curr_node = self.map[key]
+
+            before,after = curr_node.prev, curr_node.next
+
+            before.next = after
+            after.prev = before
+
+            curr_node.next,curr_node.prev = None,None
+            self.__insertAtHead__(curr_node)
+            return
+
+        newNode = Node(key,value)
+        if len(self.map) >= self.capacity:
+            self.__removeAtTail__()
+
+        self.__insertAtHead__(newNode)
+        self.map[key] = newNode
+
+        
+    def __removeAtTail__(self):
+        remove_node = self.tail.prev
+        pen_ultimate = remove_node.prev
+
+        pen_ultimate.next = self.tail
+        self.tail.prev = pen_ultimate
+
+        self.map.pop(remove_node.key)
+        del remove_node
+
+    def __insertAtHead__(self,curr_node):
+        prev_first = self.head.next
+
+        self.head.next = curr_node
+        curr_node.prev = self.head
+
+        curr_node.next = prev_first
+        prev_first.prev = curr_node

@@ -42,6 +42,52 @@ The integer n is in the range [0, 100].
 https://leetcode.com/problems/task-scheduler/
 '''
 
+# we have to use queue plus max heap 
+
+# queue for the time remaning - initially zero size
+# max heap with most frequent tasks.
+import heapq
+class Solution(object):
+    def leastInterval(self, tasks, n):
+        """
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
+        """
+        
+        import heapq
+from collections import Counter, deque
+
+class Solution(object):
+    def leastInterval(self, tasks, n):
+        """
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
+        """
+        task_counts = Counter(tasks)  # Count frequency of each task
+        max_heap = [-count for count in task_counts.values()]  # Max heap (invert sign)
+        heapq.heapify(max_heap)  # Convert list into a heap
+        
+        queue = deque()  # Stores (time_available, frequency) of tasks in cooldown
+        time = 0  # Keeps track of time units
+        
+        while max_heap or queue:
+            time += 1
+            
+            # Process available task (if any)
+            if max_heap:
+                freq = heapq.heappop(max_heap) + 1  # Pop most frequent task (-ve sign)
+                if freq < 0:  # If tasks are remaining, push to cooldown queue
+                    queue.append((time + n, freq))
+            
+            # Check if any task in cooldown is ready to be executed again
+            if queue and queue[0][0] == time:
+                heapq.heappush(max_heap, queue.popleft()[1])  # Re-add task to heap
+        
+        return time
+
+
 import collections
 from typing import List
 
