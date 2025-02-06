@@ -29,13 +29,36 @@ All the integers in nums appear only once except for precisely one integer which
 https://leetcode.com/problems/find-the-duplicate-number/
 '''
 
-from typing import List
+# Tortise and hare algorithm.
+
+class Solution(object):
+    def findDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # phase 1 find a meeting point
+        slow, fast= nums[0], nums[nums[0]]
+
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+
+        # phase 2 reset the slow to start and move until slow and fast meet and 
+        # move both of them one step each 
+        slow = 0
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[fast]
+
+        return slow
 
 
+# modifying nums solution
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
-        for i in range(0,len(nums)):
-            curr_val = abs(nums[i])
-            if nums[curr_val -1 ] <0 :
-                return curr_val
-            nums[curr_val -1 ] = -1 * nums[curr_val -1 ]
+        for i in range(0, len(nums)):  # Iterate through the list
+            curr_val = abs(nums[i])    # Get the absolute value of the current element
+            if nums[curr_val - 1] < 0:  # Check if the value at index (curr_val - 1) is negative
+                return curr_val         # If negative, it means we have already visited this number, so return it
+            nums[curr_val - 1] *= -1    # Mark the index (curr_val - 1) as visited by making it negative
