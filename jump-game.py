@@ -17,6 +17,27 @@ Explanation: You will always arrive at index 3 no matter what. Its maximum jump 
 Link: https://leetcode.com/problems/jump-game/
 '''
 
+# this is correct solution
+class Solution(object):
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        n = len(nums)
+        goal = n-1
+
+        for i in range(n-2,-1,-1):
+            max_jump = nums[i]
+
+            if max_jump + i >=goal:
+                goal = i
+        
+        return goal == 0 
+
+
+
+
 class Solution:
     def canJump(self, nums: list[int]) -> bool:
         n = len(nums)
