@@ -18,6 +18,33 @@ Output: [1]
 https://leetcode.com/problems/swap-nodes-in-pairs/
 """
 
+# one more solution with recursion
+
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution(object):
+    def swapPairs(self, head):
+        """
+        :type head: Optional[ListNode]
+        :rtype: Optional[ListNode]
+        """
+        if not head:
+            return None
+        if not head.next:
+            return head
+
+        new_head = head.next.next
+        p1 = head
+        p2 = head.next
+
+        p2.next = p1
+        p1.next = self.swapPairs(new_head)
+
+        return p2
+
 
 # Definition for singly-linked list.
 from typing import Optional
