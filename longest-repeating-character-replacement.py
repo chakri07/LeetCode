@@ -20,25 +20,35 @@ The substring "BBBB" has the longest repeating letters, which is 4.
 https://leetcode.com/problems/longest-repeating-character-replacement/
 '''
 
-import collections
+from collections import defaultdict
 
+class Solution(object):
+    def characterReplacement(self, s, k):
+        """
+        :type s: str
+        :type k: int
+        :rtype: int
+        """
+        left = 0 
+        ans = 0 
 
-class Solution:
-    def characterReplacement(self, s, k):     
-        
-        ans = 0
-        counts = collections.defaultdict(int)
-        l = 0
-        max_val = float('-inf')
-        
-        for r in range(0,len(s)):
-            counts[s[r]]+=1
-            if counts[s[r]] > max_val:
-                max_val = max(counts.values())
-            while r-l + 1 - (max_val) > k:
-                counts[s[l]]-=1
-                l = l + 1
-            ans = max(ans,r-l+1)
+        max_in_window = float('-inf')
+
+        hash_map = defaultdict(int)
+
+        for right in range(len(s)):
+            hash_map[s[right]] += 1
+
+            # finding the max freq variable in window
+            max_in_window = max(hash_map.values())
+
+            # number of non-freq elements are more than k
+            while (right-left+1) - (max_in_window) > k:
+                hash_map[s[left]] -= 1
+                left += 1 
             
+            ans = max(ans, right-left+1)
+
+        
         return ans
             
