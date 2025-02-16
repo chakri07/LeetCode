@@ -21,6 +21,48 @@ Output: []
 https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal
 '''
 
+from collections import deque
+class Solution(object):
+    def zigzagLevelOrder(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: List[List[int]]
+        """
+        # bfs we can do 
+        # once we read from right the correct direction 
+        # the other time we read from then opposite direction
+        if not root:
+            return []
+
+        queue = deque([root])
+
+        ans = []
+
+        isReversed = False
+
+        while queue:
+            level = len(queue)
+            curr_level = []
+
+            for i in range(level):
+                node = queue.popleft()
+                curr_level.append(node.val)
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+            
+            if isReversed:
+                curr_level = list(reversed(curr_level))
+            
+            ans.append(curr_level)
+            isReversed = not isReversed
+
+        return ans
+
+
+
+
 import collections
 from typing import List, Optional
 
