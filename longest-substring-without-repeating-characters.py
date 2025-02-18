@@ -23,6 +23,34 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
 https://leetcode.com/problems/longest-substring-without-repeating-characters
 '''
 
+
+from collections import defaultdict
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        if len(s) == 0:
+            return 0
+        
+        window_map = defaultdict(int)
+
+        left = 0 
+
+        ans = 0
+
+        for right in range(len(s)):
+            char = s[right]
+            while left <= right and char in window_map and not window_map[char] == 0:
+                window_map[s[left]] -=1 
+                left = left + 1
+            window_map[s[right]] += 1
+            ans = max(ans, right-left + 1)
+
+        return ans
+
+
 # try and use a map 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
