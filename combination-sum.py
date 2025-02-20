@@ -28,6 +28,37 @@ Output: []
 Link:https://leetcode.com/problems/combination-sum/
 '''
 
+# most optimized
+class Solution(object):
+    def combinationSum(self, nums, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        ans = set()
+        def helper(path,curr_sum,index):
+            curr_num = nums[index]
+
+            path.append(curr_num)
+            curr_sum += curr_num
+
+            if curr_sum == target:
+                temp = path[:]
+                temp = sorted(temp)
+                ans.add(tuple(temp))
+
+            if curr_sum < target: 
+                for i in range(index,len(nums)):
+                    helper(path,curr_sum,i)
+
+            path.pop()
+
+        for i in range(len(nums)):
+            helper([],0,i)
+
+        return list(ans)
+
 class Solution:
     def combinationSum(self, candidates: list[int], target: int) -> list[list[int]]:
         output = []
