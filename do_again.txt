@@ -1,26 +1,2 @@
-https://leetcode.com/problems/longest-repeating-character-replacement/
-
-https://leetcode.com/problems/generate-parentheses/
-
-https://leetcode.com/problems/daily-temperatures
-
-https://leetcode.com/problems/binary-tree-right-side-view/
-
-https://leetcode.com/problems/word-break/
-
-https://leetcode.com/problems/longest-palindromic-substring/
-
-https://leetcode.com/problems/regular-expression-matching/
-
-https://leetcode.com/problems/lru-cache/
-
-https://leetcode.com/problems/longest-substring-without-repeating-characters/
-
-https://leetcode.com/problems/string-to-integer-atoi/
-
-https://leetcode.com/problems/diameter-of-binary-tree/
-
-https://leetcode.com/problems/median-of-two-sorted-arrays/
-
-https://leetcode.com/problems/task-scheduler/
+https://leetcode.com/problems/subarray-sum-equals-k/
 
