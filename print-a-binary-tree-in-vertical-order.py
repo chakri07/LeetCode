@@ -27,37 +27,51 @@ class Node:
         self.data = val
         self.left = None
 '''
-from collections import defaultdict
-class Solution:
-    
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+from collections import deque,defaultdict
+class Solution(object):
     def verticalOrder(self, root):
-        ans = defaultdict(list)
-        
-        min_col = [float('inf')]
-        max_col = [float('-inf')]
-        
-        def dfs(node,col):
-            if not node:
-                return
-            
-            ans[col].append(node.data)
-            min_col[0] = min(col,min_col[0])
-            max_col[0] = max(col,max_col[0])
-            
+        """
+        :type root: Optional[TreeNode]
+        :rtype: List[List[int]]
+        """
+        # lets do BFS 
+        if not root:
+            return []
+        node_map = defaultdict(list)
+        queue = deque([])
+        queue.append((root,0))
+
+        col_min = float('inf')
+        col_max = float('-inf')
+
+        while queue:
+            node,col = queue.popleft()
+
+            node_map[col].append(node.val)
+
+            col_min = min(col_min,col)
+            col_max = max(col_max,col)
+
             if node.left:
-                dfs(node.left,col-1)
-                
+                queue.append((node.left,col-1))
+            
             if node.right:
-                dfs(node.right,col+1)
-            
-            return 
-        
-        dfs(root,0)
-        final_ans = []
-        for i in range(min_col[0],max_col[0]+1):
-            if i in ans:
-                final_ans.append(ans[i])
-        
-            
-        return final_ans
+                queue.append((node.right,col+1))
+
+        ans = []
+        for i in range(int(col_min),int(col_max+1)):
+            if i in node_map:
+                ans.append(node_map[i])
+
+        return ans
+                
+
+
         
