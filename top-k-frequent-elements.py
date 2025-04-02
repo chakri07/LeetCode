@@ -37,6 +37,36 @@ class Solution:
         return list(sorted_freq_map.keys())[:k]
 
 
+
+
+
+from collections import defaultdict
+import heapq
+class Solution(object):
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        freq_map = defaultdict(int)
+
+        for num in nums:
+            freq_map[num] += 1
+
+        max_heap = []
+
+        for num,freq in freq_map.items():
+            heapq.heappush(max_heap,(-freq, num))
+
+        ans = []
+        for _ in range(k):
+            if max_heap:
+                _, num = heapq.heappop(max_heap)
+                ans.append(num)
+
+        return ans
+
 # solution 2
 
 
