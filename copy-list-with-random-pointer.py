@@ -44,6 +44,55 @@ Node.random is null or is pointing to some node in the linked list.
 https://leetcode.com/problems/copy-list-with-random-pointer/
 '''
 
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, x, next=None, random=None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+"""
+
+class Solution(object):
+    def copyRandomList(self, head):
+        """
+        :type head: Node
+        :rtype: Node
+        """
+        if not head:
+            return head
+        node_map = {}
+        ref = head
+
+        while head:
+            if not head in node_map:
+                node_map[head] = Node(head.val)
+            
+            new_head = node_map[head]
+                
+
+            nxt_node = head.next
+            if nxt_node:
+                if not  nxt_node in node_map:
+                    new_next = Node(head.next.val)
+                    node_map[nxt_node] = new_next
+
+                new_head.next = node_map[nxt_node]
+
+            
+            rand_node = head.random
+            if rand_node:
+                if not rand_node in node_map:
+                    new_rand = Node(rand_node.val)
+                    node_map[rand_node] = new_rand
+                
+                new_head.random = node_map[rand_node]
+            
+            head = head.next
+
+        return node_map[ref]
+
+
 from typing import Optional
 
 

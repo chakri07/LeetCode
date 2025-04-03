@@ -32,18 +32,28 @@ At most 104 calls will be made to next.
 https://leetcode.com/problems/moving-average-from-data-stream/
 '''
 
-class MovingAverage:
+from collections import deque
+class MovingAverage(object):
 
-    def __init__(self, size: int):
-        self.queue = []
-        self.window = size
-        self.sum = 0 
+    def __init__(self, size):
+        """
+        :type size: int
+        """
+        self.sum = 0.0 # making float for proper divison.
+        self.size = size
+        self.window = deque([])
+    
 
-    def next(self, val: int) -> float:
-        if len(self.queue) == self.window:
-            self.sum = self.sum - self.queue.pop(0)
-            
-            
-        self.queue.append(val)
+    def next(self, val):
+        """
+        :type val: int
+        :rtype: float
+        """
+        if len(self.window) >= self.size:
+            prev_val = self.window.popleft()
+            self.sum -= prev_val
+        
         self.sum += val
-        return self.su/len(self.queue)
+        self.window.append(val)
+
+        return self.sum/len(self.window)

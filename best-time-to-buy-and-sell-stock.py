@@ -21,6 +21,23 @@ Explanation: In this case, no transactions are done and the max profit = 0.
 
 Link: https://leetcode.com/problems/best-time-to-buy-and-sell-stock
 '''
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        if len(prices) == 0 :
+            return 0 
+        ans = 0
+        min_until = prices[0]
+
+        for price in prices[1:]:
+            ans = max(ans, price-min_until)
+            min_until = min(price, min_until)
+
+        return ans
+
 
 class Solution:
     def maxProfit(self, prices: list[int]) -> int:

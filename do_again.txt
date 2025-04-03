@@ -5,5 +5,7 @@ https://leetcode.com/problems/find-peak-element/
 https://leetcode.com/problems/random-pick-with-weight/
 
 https://leetcode.com/problems/top-k-frequent-elements/
-    do hoares algorithm
+- do hoares algorithm
+    
+https://leetcode.com/problems/lru-cache
 

@@ -71,7 +71,4 @@ class Solution(object):
                 ans.append(node_map[i])
 
         return ans
-                
-
-
         

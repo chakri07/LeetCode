@@ -29,6 +29,40 @@ Output: [[3,7]]
 '''
 
 
+
+class Solution(object):
+    def intervalIntersection(self, firstList, secondList):
+        """
+        :type firstList: List[List[int]]
+        :type secondList: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        p1 = 0 
+        p2 = 0 
+
+        ans = []
+        while p1 < len(firstList) and p2 < len(secondList):
+            o_s, o_e = firstList[p1]
+            s_s, s_e = secondList[p2]
+
+            if (o_e >= s_s and  o_s <= s_e) or (s_e >= o_s and s_s <= o_e) :
+                # means some overlap is there 
+                overlap = [max(o_s,s_s),min(o_e,s_e)]
+                ans.append(overlap)
+                if ans[-1][1] == o_e:
+                    p1 += 1
+                else:
+                    p2 += 1
+            else:
+                # i.e) no overlap 
+                if o_s < s_s:
+                    p1 += 1
+                else:
+                    p2 += 1
+        
+        return ans
+
+
 class Solution:
     def intervalIntersection(self, firstlist: list[list[int]], secondlist: list[list[int]]) -> list[list[int]]:
         pos1 = 0
