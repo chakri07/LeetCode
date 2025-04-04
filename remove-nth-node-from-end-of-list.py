@@ -28,22 +28,26 @@ class ListNode:
         self.val = val
         self.next = next
 
-class Solution:
-    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        if not head or n ==0:
-            return head
-        if head.next == None and n ==1:
+if head.next == None and n ==1:
             return None
-        ln = 0 
         temp = head
-        while(temp):
+        length = 0 
+
+        while temp:
+            length += 1
             temp = temp.next
-            ln+=1
-        if n == ln:
+
+        if n == length:
             return head.next
-        
+
+        count = 1
         temp = head
-        for i in range(0,ln-n-1):
+        while count <  length - n:
             temp = temp.next
-        temp.next = temp.next.next
+            count += 1
+
+        remove_node = temp.next
+        
+        temp.next = remove_node.next
+
         return head
