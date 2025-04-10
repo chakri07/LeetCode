@@ -40,6 +40,45 @@ Constraints:
 https://leetcode.com/problems/next-permutation/description/
 """
 
+
+class Solution:
+    def nextPermutation(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        # step 1 : Find the first number that is decreasing from right 
+        # step 2 : Find a number greater than that number and swap 
+        # step 3 : then reverse everything thats after that 
+
+        decreasing_idx = -1
+        for i in range(len(nums)-2, -1, -1):
+            if nums[i] < nums[i+1]:
+                decreasing_idx = i
+                break
+        
+        if decreasing_idx == -1:
+            nums.reverse()
+            return 
+        # find the next greate number 
+
+        for i in range(len(nums)-1, decreasing_idx, -1):
+            if nums[i] > nums[decreasing_idx]:
+                nums[i], nums[decreasing_idx] = nums[decreasing_idx], nums[i]
+                break
+        
+        # then reversed the part after decreasing_idx
+        left = decreasing_idx + 1
+        right = len(nums) - 1  
+
+        while left < right:
+            nums[left], nums[right] = nums[right], nums[left]
+            left += 1
+            right -= 1
+
+
+
+
+
 class Solution(object):
     def nextPermutation(self, nums):
         """
