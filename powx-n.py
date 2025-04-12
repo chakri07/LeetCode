@@ -36,8 +36,6 @@ class Solution(object):
         :rtype: float
         """
         def helper(x,n):
-            print(x)
-            print(n)
             if x == 0:
                 return 0
             if n == 0:

@@ -23,6 +23,47 @@ https://leetcode.com/problems/binary-tree-right-side-view/
 
 # Level order traversal solution
 # BFS
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+from collections import deque
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        queue = deque([])
+
+        if not root:
+            return []
+        
+        queue.append(root)
+        child_queue = deque([])
+        level = []
+        ans = []
+        right_side = []
+        while queue:
+            node = queue.popleft()
+            level.append(node.val)
+
+            if node.left:
+                child_queue.append(node.left)
+            if node.right:
+                child_queue.append(node.right)
+            
+            if not queue:
+                right_side.append(node.val)
+                queue = child_queue
+                child_queue = deque([])
+
+                ans.append(level)
+                level = []
+
+        
+        return right_side
+
+        
  
 from collections import deque
 class Solution(object):
@@ -43,10 +84,11 @@ class Solution(object):
         while queue:
             node  = queue.popleft()
             temp.append(node.val)
-            if node.right:
-                child_queue.append(node.right)
             if node.left:
                 child_queue.append(node.left)
+            if node.right:
+                child_queue.append(node.right)
+            
             
             if len(queue) == 0:
                 queue = child_queue
@@ -57,7 +99,7 @@ class Solution(object):
         ans = []
 
         for lev in level:
-            ans.append(lev[0])
+            ans.append(lev[-1])
 
         return ans
 

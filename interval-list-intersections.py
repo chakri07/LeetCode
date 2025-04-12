@@ -28,6 +28,32 @@ Input: firstlist = [[1,7]], secondlist = [[3,10]]
 Output: [[3,7]]
 '''
 
+class Solution:
+    def intervalIntersection(self, A: List[List[int]], B: List[List[int]]) -> List[List[int]]:
+        p1 = 0 
+        p2 = 0 
+
+        n = len(A)
+        m = len(B)
+
+        ans= []
+
+        while p1 < n and p2 < m:
+            low = max(A[p1][0],B[p2][0])
+
+            high = min(A[p1][1],B[p2][1])
+
+            if low <= high:
+                ans.append([low,high])
+
+            # move the pointer for lowest end point
+
+            if A[p1][1] < B[p2][1]:
+                p1 +=1  
+            else:
+                p2 += 1
+        
+        return ans
 
 
 class Solution(object):

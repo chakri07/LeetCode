@@ -27,6 +27,31 @@ Constraints:
 https://leetcode.com/problems/subarray-sum-equals-k/description/
 """
 
+from collections import defaultdict
+class Solution:
+    def subarraySum(self, nums, k):
+
+        prefix_sum = 0
+
+        count_map = defaultdict(int)
+
+        ans = 0 
+
+        for num in nums:
+            prefix_sum += num
+
+            if prefix_sum == k:
+                ans += 1
+            
+            if prefix_sum -k in count_map:
+                ans += count_map[prefix_sum-k]
+
+            count_map[prefix_sum] += 1
+        
+        return ans
+
+
+
 class Solution(object):
     def subarraySum(self, nums, k):
         """

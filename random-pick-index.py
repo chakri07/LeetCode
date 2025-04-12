@@ -31,6 +31,44 @@ At most 104 calls will be made to pick.
 
 https://leetcode.com/problems/random-pick-index
 """
+# using binary search
+import random
+class Solution:
+
+    def __init__(self, w: List[int]):
+        self.sum_arr = []
+        self.prefix_sum = 0 
+        
+        for i in range(len(w)):
+            self.prefix_sum += w[i]
+            self.sum_arr.append(self.prefix_sum)
+
+    def pickIndex(self) -> int:
+
+
+        target = random.randint(1, self.prefix_sum)
+        
+        low, high = 0, len(self.sum_arr)-1 
+        while low <= high:
+            mid = (low + high)//2
+
+            if target == self.sum_arr[mid]:
+                return mid
+
+            if target > self.sum_arr[mid]:
+                low = mid + 1
+            else:
+                high = mid -1
+
+        return low
+
+
+# Your Solution object will be instantiated and called as such:
+# obj = Solution(w)
+# param_1 = obj.pickIndex()
+
+
+
 from collections import defaultdict
 import random
 class Solution:

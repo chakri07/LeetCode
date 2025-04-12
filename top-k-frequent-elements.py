@@ -13,31 +13,37 @@ Input: nums = [1], k = 1
 Output: [1]
 
 '''
-
-# using sorting 
-
+# bucket sort
+from collections import defaultdict
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        freq_map = {}
+
+        ## Bucket sort
+        counts = defaultdict(int)
+
+        max_count = float('-inf')
 
         for num in nums:
-            if num in freq_map: 
-                freq_map[num] +=1
-            else:
-                freq_map[num] = 1
+            counts[num] += 1
+            max_count = max(max_count, counts[num])
+        
+        # freq_arr 
+        freq_arr = [[] for _ in range(max_count)]
+        # print(freq_arr)
 
-        # now sort the frequ_map 
+        for  num,freq in counts.items():
+            freq_arr[freq-1].append(num)
 
-        sorted_freq_map = dict(sorted(freq_map.items(),
-            key = lambda item: item[1],
-            reverse = True))
+        # print(freq_arr)
+        result = []
 
-        print(sorted_freq_map)
+        for i in range(max_count-1,-1,-1):
+            if len(result) == k:
+                return result
+            
+            result.extend(freq_arr[i])
 
-        return list(sorted_freq_map.keys())[:k]
-
-
-
+        return result
 
 
 from collections import defaultdict

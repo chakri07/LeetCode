@@ -23,6 +23,62 @@ Constraints:
 
 https://leetcode.com/problems/kth-largest-element-in-an-array/
 '''
+# inplace 
+import random
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        k = len(nums) - k
+        def quick_select(l,r):
+            if l == r:
+                return nums[l]
+
+            pivot_idx = random.randint(l,r)
+            
+            pivot, p = nums[pivot_idx], l
+
+            nums[pivot_idx], nums[r] = nums[r], nums[pivot_idx]
+
+            for i in range(l,r):
+                if nums[i] <= pivot:
+                    nums[i], nums[p] = nums[p] , nums[i]
+                    p+= 1
+            
+            nums[p], nums[r] = nums[r], nums[p]
+
+            if k < p:
+                return quick_select(l,p-1)
+            if k > p:
+                return quick_select(p+1,r)
+            
+            return nums[p]
+
+        return quick_select(0,len(nums)-1)
+
+# Horase algorithm
+class Solution:
+    def findKthLargest(self, nums, k):
+        def quick_select(nums, k):
+            pivot = random.choice(nums)
+            left, mid, right = [], [], []
+
+            for num in nums:
+                if num > pivot:
+                    left.append(num)
+                elif num < pivot:
+                    right.append(num)
+                else:
+                    mid.append(num)
+            
+            if k <= len(left):
+                return quick_select(left, k)
+            
+            if len(left) + len(mid) < k:
+                return quick_select(right, k - len(left) - len(mid))
+            
+            return pivot
+        
+        return quick_select(nums, k)
+
 
 import heapq
 from typing import List
