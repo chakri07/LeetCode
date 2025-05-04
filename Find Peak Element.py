@@ -23,24 +23,32 @@ Explanation: Your function can return either index number 1 where the peak eleme
 Link: https://leetcode.com/problems/find-peak-element/
 '''
 
-class Solution(object):
-    def findPeakElement(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
+
+class Solution:
+    def findPeakElement(self, nums: List[int]) -> int:
         left = 0 
-        right = len(nums)
+        right = len(nums) - 1
 
         while left <= right:
-            mid = (left+right) // 2
+            mid = (left+right)//2
 
-            if mid + 1 < len(nums) and nums[mid] < nums[mid+1]:
-                left = mid + 1
-            elif mid - 1 >= 0 and nums[mid] < nums[mid-1]:
-                right = mid -1 
-            else:
+            n1 = float('-inf')
+            n2 = float('-inf')
+
+            if mid - 1 >= 0 :
+                n1 = nums[mid-1]
+            if mid + 1 < len(nums):
+                n2 = nums[mid+1]
+            
+            n = nums[mid]
+
+            if n > n1 and n > n2:
                 return mid
+            
+            if n1 > n:
+                right = mid - 1
+            else:
+                left = mid + 1
 
 
 def findPeakElement(self, nums: list[int]) -> int:

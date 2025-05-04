@@ -60,7 +60,7 @@ def threeSum(self, nums: list[int]) -> list[list[int]]:
     for i in range(0, len(nums)-2):
         left = i + 1
         right = len(nums)-1
-        while( left < right):
+        while( left < right ):
             sum = nums[i] + nums[left] + nums[right]
             if sum == 0 :
                 sortedArray = sorted([nums[i],nums[left],nums[right]])

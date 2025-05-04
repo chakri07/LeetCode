@@ -55,15 +55,12 @@ class Solution(object):
                 word_idx += 1
 
             elif abbr[abbr_idx].isdigit():
-                if abbr[abbr_idx] == '0':
-                    return False
-
                 num = ''
                 while abbr_idx < len(abbr) and abbr[abbr_idx].isdigit():
                     num += abbr[abbr_idx]
                     abbr_idx += 1 
                     
-                if num[0] == 0 and len(num) > 1:
+                if int(num[0]) == 0:
                     return False
 
                 num = int(num)
