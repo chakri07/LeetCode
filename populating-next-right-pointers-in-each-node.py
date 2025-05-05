@@ -27,7 +27,7 @@ class Node:
 """
 from collections import deque
 class Solution:
-    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+    def connect(self, root):
         queue = deque([])
         child_queue = deque([])
 

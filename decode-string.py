@@ -29,25 +29,31 @@ https://leetcode.com/problems/decode-string/submissions/
 class Solution:
     def decodeString(self, s: str) -> str:
         stack = []
-        for i in range(0,len(s)):
-            if s[i] == ']':
-                decode = ""
-                while stack[-1] != '[':
-                    decode = decode + stack.pop()
-                
+
+        for i in range(len(s)):
+            char = s[i]
+
+            if char == ']':
+                # extract string 
+                decode = ''
+                while stack and stack[-1] != '[':
+                    decode = stack.pop() + decode
+
+                # extract number 
                 stack.pop()
+                num = 0 
                 base = 1
-                k = 0
-                while len(stack) != 0 and stack[-1].isdigit():
-                    k = k + int(stack.pop())*base
-                    base = base * 10 
-                    
-                while k!= 0:
-                    for j in range(len(decode)-1,-1,-1):
-                        stack.append(decode[j])
-                    k = k - 1
-                    
-            else:
-                stack.append(s[i])
+
+                while stack and stack[-1].isdigit():
+                    num = num + base*int(stack.pop())
+                    base *= 10
                 
-        return "".join(stack)
+                # add them back to stack
+                for j in range(num):
+                    stack.append(decode)
+
+
+            else:
+                stack.append(char)
+
+        return ''.join(stack)
