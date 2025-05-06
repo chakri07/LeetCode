@@ -29,6 +29,26 @@ Thus, the result should be [1,0].
 
 https://leetcode.com/problems/plus-one/
 '''
+from typing import List
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+
+        carry = 1
+
+        for i in range(len(digits)-1, -1, -1 ):
+            val = carry + digits[i]
+
+            digits[i] = val % 10 
+            carry = val // 10 
+
+            if carry == 0 :
+                break
+
+        if carry == 0:
+            return digits
+        else:
+            return [carry] + digits
+
 
 class Solution:
     def plusOne(self, digit: list[int]) -> list[int]:
