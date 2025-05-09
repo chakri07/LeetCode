@@ -100,7 +100,6 @@ class Solution(object):
                 else:
                     stack.append(command_name)
 
-        # print(stack)
         ans = ''
 
         for directory in stack:
