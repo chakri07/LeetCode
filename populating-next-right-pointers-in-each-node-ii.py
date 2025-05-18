@@ -60,3 +60,42 @@ class Solution:
                 child = sub_child
                 sub_child = []      
         return root
+    
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+from collections import deque
+class Solution:
+    def connect(self, root: 'Node') -> 'Node':
+        queue = deque([root])
+
+        child_queue = deque([])
+
+        if not root:
+            return None
+
+        while queue:
+            node = queue.popleft()
+
+            if node.left:
+                child_queue.append(node.left)
+            if node.right:
+                child_queue.append(node.right)
+
+            if not queue:
+                for i in range(0,len(child_queue)-1):
+                    node = child_queue[i]
+                    node.next = child_queue[i+1]
+
+                queue = child_queue
+
+                child_queue = deque([])
+                
+        return root

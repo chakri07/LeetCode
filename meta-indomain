@@ -1,0 +1,77 @@
+Design an Entity-Component System (ECS) for a real-time simulation (e.g., a VR game world).
+
+Follow-up: How would you ensure cache efficiency and multithreading?
+
+
+
+Design a game loop suitable for an AR/VR headset.
+
+Consider fixed vs variable timesteps, rendering & physics update separation.
+
+Build a real-time asset streaming system for a game engine.
+
+What if the user moves quickly into a new area with many unloaded assets?
+
+Design a cross-platform abstraction layer for rendering APIs (e.g., DirectX, Metal, Vulkan).
+
+What challenges arise for mobile/embedded GPUs like in Quest?
+
+⏱️ Performance & Systems-Level
+Design a job system/task scheduler to parallelize CPU-heavy workloads (e.g., physics, animation).
+
+Follow-up: How would you avoid contention and cache misses?
+
+Design a memory allocator optimized for small, short-lived objects in a VR runtime.
+
+Pool allocators? Stack allocators?
+
+Design a data layout for transform hierarchies (e.g., skeletal animation or scene graphs).
+
+AoS vs SoA? SIMD-friendliness?
+
+How would you structure a real-time logging system for a latency-sensitive application like VR?
+
+How to avoid stalling the main thread?
+
+👁️ AR/VR Specific Design Questions
+Design a pose tracking fusion system that combines IMU and camera data.
+
+How do you handle sensor latency and drift?
+
+Design a stereo rendering pipeline for a standalone VR headset.
+
+How would you manage GPU resources and reduce latency?
+
+Build a system to detect and respond to user gestures using hand-tracking input.
+
+Consider tracking uncertainty and responsiveness.
+
+Design an avatar animation system for a multiplayer VR space.
+
+How do you handle network latency and prediction?
+
+Build a virtual room-mapping system using spatial anchors and SLAM.
+
+How to keep it performant on-device?
+
+🔊 Multimodal / Peripheral Integration
+Design a haptics feedback engine that works with custom input devices.
+
+Timing sensitivity? Priority queue for overlapping events?
+
+Build a spatial audio system for an AR application.
+
+How would you model occlusion, reverb, and audio source placement?
+
+🧠 Bonus / Advanced
+How would you design a predictive rendering system to reduce perceived latency in VR?
+
+What tradeoffs exist in predicting head pose?
+
+Design a scene culling and LOD system for a large open-world VR experience.
+
+Memory vs performance? CPU vs GPU culling?
+
+Build a debugging/visualization layer for internal profiling in a real-time engine.
+
+What data should you capture? How do you minimize performance impact?
