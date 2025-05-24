@@ -55,9 +55,8 @@ class Solution(object):
         :rtype: int
         """
         
-        import heapq
+import heapq
 from collections import Counter, deque
-
 class Solution(object):
     def leastInterval(self, tasks, n):
         """

@@ -32,6 +32,65 @@ All the strings of words are unique.
 https://leetcode.com/problems/word-search-ii
 """
 
+
+from collections import deque
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.eow = (False,None)
+
+
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        root = TrieNode()
+
+
+        # insert words
+        for word in words:
+            curr_root = root
+            for char in word:
+                if not char in curr_root.children:
+                    curr_root.children[char] = TrieNode()
+                curr_root = curr_root.children[char]
+            
+            curr_root.eow = (True,word)
+
+
+        ans = set()
+        rows = len(board)
+        cols = len(board[0])
+
+        neighs = [(0,1),(1,0),(-1,0),(0,-1)]
+
+        def dfs(r,c,trie_node):
+
+            temp =  board[r][c]
+            board[r][c]= '#'
+
+            if trie_node.eow[0]:
+                ans.add(trie_node.eow[1])
+
+            for dr,dc in neighs:
+                nr,nc = r+dr, c+dc
+                if 0 <= nr < rows and 0 <= nc < cols: 
+                    if board[nr][nc] in trie_node.children:
+                            new_char = board[nr][nc]
+                            dfs(nr,nc,trie_node.children[new_char])
+            
+            board[r][c] = temp
+                            
+        for r in range(rows):
+            for c in range(cols):
+                if board[r][c] in root.children:
+                    char = board[r][c]
+                    dfs(r,c,root.children[char])
+
+        return list(ans)
+
+
+
+# ----------------------------------------------- ---------------------------------------------- ----------------------------------------
+
 class TrieNode:
     def __init__(self):
         self.children = {}
