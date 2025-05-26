@@ -37,35 +37,28 @@ https://leetcode.com/problems/maximum-profit-in-job-scheduling
 from typing import List
 class Solution:
     def jobScheduling(self, startTime: List[int], endTime: List[int], profit: List[int]) -> int:
-
-        """
-        1. first did recursive solution -> we have 2 choices 
-        2. Included DP -> dp store the max profit starting from i
-        3. do bin search to find the next index.
-        """
-
-        n = len(startTime) 
+        n = len(startTime)
         jobs = []
-
-        for i in range(n):
-            jobs.append([startTime[i],endTime[i],profit[i]])
-
-        jobs = sorted(jobs, key = lambda x: x[0])
         
-        # we do on changing stuff
-        dp = {}
-        """
-        dp will store max profit acheivable starting from i or 
-        after i ,... irrespective of we are taking or n
-        """
+        for i in range(n):
+            jobs.append((startTime[i], endTime[i], profit[i]))
 
-        def bin_search(left):
-            start = left
-            right = n-1
-            ans = left
+        jobs = sorted(jobs, key = lambda x : x[0])
+
+        dp= {}
+
+        # dp represent max profit you can get starting from job i
+
+        def binarySearch(curr):
+            left = curr + 1
+            right = n - 1
+
+            if left >= n:
+                return -1
+            ans = -1
             while left <= right:
                 mid = (left + right)//2
-                if jobs[mid][0] >= jobs[start][1]:
+                if jobs[mid][0] >= jobs[curr][1]:
                     ans = mid
                     right = mid - 1
                 else:
@@ -73,39 +66,36 @@ class Solution:
 
             return ans
 
-
         def helper(i):
-            """
-            2 choices 
-            1. take the job 
-            2. Dont take the job
-            """
-            
             if i >= n:
                 return 0
-                
+            
             if i in dp:
                 return dp[i]
             
+            #choice 1 : job is taken
+            next_idx = -1
+
+            # # this can be binary search
+            # for j in range(i,n):
+            #     if jobs[j][0] >= jobs[i][1]:
+            #         next_idx = j
+            #         break
             
-            # Dont take the job 
+            next_idx = binarySearch(i)
 
-            profit_if_skipped = helper(i+1)
-
-            # option 2 : take the current_job 
-            curr_start_time, curr_end_time, curr_profit = jobs[i]
-            
-            next_idx = bin_search(i)
-            # here we can do bin search
-
-            profit_if_taken = curr_profit
-            if next_idx > i:
+            profit_if_taken = jobs[i][2]
+            if next_idx != -1:
                 profit_if_taken += helper(next_idx)
 
-            dp[i] = max(profit_if_taken, profit_if_skipped)
+            # choice 2: job not taken
+            profit_not_taken = helper(i+1)
+
+            dp[i] = max(profit_not_taken, profit_if_taken)
 
             return dp[i]
 
         helper(0)
+
 
         return max(dp.values())
