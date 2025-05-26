@@ -32,6 +32,42 @@ events[i].length == 2
 https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended
 """
 
+# using queue for more efficient
+
+import heapq
+from collections import deque
+class Solution:
+    def maxEvents(self, events: List[List[int]]) -> int:
+
+        day = 0 
+
+        min_heap = []
+        n = len(events)
+        ans = 0 
+
+        events  =  deque(sorted(events, key = lambda x: (x[0], x[1])))
+
+        while events or min_heap:
+            day += 1
+            
+            # push all the events happending until that day into heap 
+
+            while events and events[0][0] <= day : 
+                heapq.heappush(min_heap, events.popleft()[1])
+
+            # remove all the events that are over
+            while min_heap and min_heap[0] < day:
+                heapq.heappop(min_heap)
+            
+            # if we attend anything 
+            if min_heap:
+                heapq.heappop(min_heap)
+                ans += 1
+
+        return ans
+
+
+
 import heapq
 class Solution:
     def maxEvents(self, events: List[List[int]]) -> int:
