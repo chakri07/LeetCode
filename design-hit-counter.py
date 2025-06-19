@@ -32,22 +32,55 @@ hitCounter.getHits(301); // get hits at timestamp 301, return 3.
 https://leetcode.com/problems/design-hit-counter
 """
 
-import heapq
+
+class HitCounter:
+
+    def __init__(self):
+        # we can try with 300 length arr 
+        # we store 2 things timstamp and counter.
+        self.arr = [[0,0]] * 300
+
+    def hit(self, timestamp: int) -> None:
+        arr_idx = timestamp % 300
+        if self.arr[arr_idx][0] == timestamp:
+            self.arr[arr_idx][1] += 1
+        else:
+            self.arr[arr_idx] = [timestamp,1]
+
+    def getHits(self, timestamp: int) -> int:
+        ans = 0 
+        for hit_time, hit_count in self.arr:
+            if timestamp - 300 < hit_time:
+                ans += hit_count
+        
+        return ans
+
+
+
+
+from collections import deque
 class HitCounter:
     # something with deque
 
     def __init__(self):
-        self.heap = []        
+        self.queue = deque([]) 
 
     def hit(self, timestamp: int) -> None:
-        heapq.heappush(self.heap,timestamp)     
+        self.queue.append(timestamp)
 
     def getHits(self, timestamp: int) -> int:
-        while self.heap and self.heap[0] <= timestamp - 300:
-            heapq.heappop(self.heap)
+        while self.queue and self.queue[0] <= timestamp - 300:
+            self.queue.popleft()
         
-        return len(self.heap)
+        return len(self.queue)
 
+        
+
+
+# Your HitCounter object will be instantiated and called as such:
+# obj = HitCounter()
+# obj.hit(timestamp)
+# param_2 = obj.getHits(timestamp)
 
 # Your HitCounter object will be instantiated and called as such:
 # obj = HitCounter()

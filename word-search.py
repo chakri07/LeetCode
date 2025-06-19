@@ -24,6 +24,44 @@ Output: false
 Link:https://leetcode.com/problems/word-search/
 '''
 
+
+
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+
+        rows = len(board)
+        cols = len(board[0])
+
+        dirs = [(0,1),(1,0),(-1,0),(0,-1)]
+
+
+        def dfs(r,c,word,visited):
+            if not word:
+                return True
+            
+
+            for dr,dc in dirs:
+                nr, nc = r+dr , c+dc 
+                if 0 <= nr < rows and 0 <= nc < cols:
+                    if (nr, nc) not in visited and board[nr][nc] == word[0]:
+                        visited.add((nr,nc))
+                        if dfs(nr, nc, word[1:],visited):
+                            return True
+                        visited.remove((nr,nc))
+
+            return False
+        
+        for r in range(rows):
+            for c in range(cols):
+                if board[r][c] == word[0]:
+                    visited = set()
+                    visited.add((r,c))
+                    if dfs(r,c, word[1:], visited):
+                        return True 
+
+        return False    
+
+
 # Backtracking DFS
 # Dont forget to remove the element which is not part of the word.
 
