@@ -58,12 +58,13 @@ class Solution:
                 ans = 256 * ans + int(octet)
             return ans
 
-        def int_to_ip(ip_int):
-            octets = []
-            for shift_amount in (24, 16, 8, 0):
-                octet_value = (ip_int >> shift_amount) & 255 # Use & 255 for clarity, equivalent to % 256
-                octets.append(str(octet_value))
-            return ".".join(octets)
+        def int_to_ip(x):
+            ans = []
+            for _ in range(4):
+                octet = x % 256                
+                x = x // 256 
+                ans.append(str(octet))
+            return '.'.join(reversed(ans))
 
         current_ip_int = ip_to_int(ip)
         ans = []

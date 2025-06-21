@@ -49,6 +49,32 @@ board[i][j] is a digit 1-9 or '.'.
 
 https://leetcode.com/problems/valid-sudoku/description/
 """
+from typing import List
+from collections import defaultdict
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        rows = [set() for _ in range(9)]
+        cols = [set() for _ in range(9)]
+        boxes = defaultdict(set)
+
+        for r in range(len(board)):
+            for c in range(len(board[0])):
+                
+                box_idx = ((r//3),(c//3))
+
+                num = board[r][c]
+                if num == '.':
+                    continue
+
+                if num in rows[r] or num in cols[c] or  num in boxes[box_idx]:
+                    return False
+                
+                rows[r].add(num)
+                cols[c].add(num)
+                boxes[box_idx].add(num)
+
+        return True
+
 
 class Solution(object):
     def isValidSudoku(self, board):
