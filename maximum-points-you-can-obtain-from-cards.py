@@ -28,6 +28,30 @@ Explanation: You have to take all the cards. Your score is the sum of points of 
 Link: https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/
 '''
 
+from typing import List
+class Solution:
+    def maxScore(self, cardPoints: List[int], k: int) -> int:
+
+        front_score = [0] * (k+1)
+        back_score = [0] * (k+1)
+        n = len(cardPoints)
+
+        for i in range(k):
+            front_score[i+1]  = front_score[i] + cardPoints[i]    
+        
+        for i in range(k):
+            back_score[i+1] = back_score[i] + cardPoints[n-i-1]
+
+        max_score = 0
+
+        for i in range(k+1):
+            curr_score = front_score[i] + back_score[k-i]
+            max_score = max(max_score, curr_score)
+
+        return max_score
+
+
+
 #  sliding window solution its really good
 class Solution:
     def maxScore(self, cardPoints: list[int], k: int) -> int:
