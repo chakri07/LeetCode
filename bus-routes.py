@@ -32,6 +32,45 @@ sum(routes[i].length) <= 105
 
 https://leetcode.com/problems/bus-routes/
 """
+
+class Solution:
+    def numBusesToDestination(self, routes: List[List[int]], source: int, target: int) -> int:
+        if source == target:
+            return 0 
+        
+        # stop will store all the route indices its in 
+        graph = defaultdict(list)
+        
+        for i in range(len(routes)):
+            route = routes[i]
+            for stop in route:
+                graph[stop].append(i)
+
+        queue = deque([])
+        visited = set()
+
+        for route_idx in graph[source]:
+            queue.append((route_idx,1))
+            visited.add(route_idx)
+
+        while queue:
+            curr_route_idx, num_buses = queue.popleft()
+
+            for stop in routes[curr_route_idx]:
+                if stop == target:
+                    return num_buses
+                
+                for next_idx in graph[stop]:
+                    if next_idx not in visited:
+                        queue.append((next_idx, num_buses+1 ))
+                        visited.add(next_idx)
+
+
+        return -1
+
+
+
+
 from collections import defaultdict, deque
 from typing import List
 
