@@ -38,7 +38,7 @@ class Solution:
         return ans
     
     def dfs( self, grid : list[list[int]],start:int):
-        conn =[]
+        conn = []
         conn.append(start)
         while conn:
             x = conn.pop()
@@ -50,7 +50,39 @@ class Solution:
             
             
             
-                
+from typing import List
+from collections import defaultdict
+## Another solution
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        visited = set()
+
+        # r = source city 
+        # c = dest city  
+        graph = defaultdict(set)
+        n = len(isConnected)
+        def make_graph():
+            for i in range(n):
+                for j in range(n):
+                    if isConnected[i][j] == 1:
+                        graph[i].add(j)
+                        graph[j].add(i)
+
+        def dfs(city):
+            neigh = graph[city]
+            for neigh_city in neigh:
+                if neigh_city not in visited:
+                    visited.add(neigh_city)
+                    dfs(neigh_city)
+
+        ans = 0 
+        make_graph()
+        for i in range(n):
+            for j in range(n):
+                if isConnected[i][j] == 1 and i not in visited:
+                    visited.add(i)
+                    dfs(i)
+                    # print(visited)
+                    ans += 1
         
-                    
-        
+        return ans
