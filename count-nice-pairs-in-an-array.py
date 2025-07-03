@@ -27,6 +27,8 @@ Constraints:
 
 https://leetcode.com/problems/count-nice-pairs-in-an-array
 """
+from typing import List
+from collections import defaultdict
 
 class Solution:
     def countNicePairs(self, nums: List[int]) -> int:
