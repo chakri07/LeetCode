@@ -84,4 +84,52 @@ class Solution:
         ansArr.sort()            
         return ansArr[0]
     
+
+from collections import defaultdict
+from typing import List
+
+class Solution:
+    def mostVisitedPattern(self, username: List[str], timestamp: List[int], website: List[str]) -> List[str]:
+
+
+        user_visits = defaultdict(list)
+        n = len(username)
+        for i in range(n):
+            user_visits[username[i]].append((timestamp[i], website[i]))
+
+      
+        for user in user_visits:
+            user_visits[user].sort() 
+
+        scores = defaultdict(int)
+
+        for user, visits in user_visits.items():
             
+            user_websites = [visit[1] for visit in visits]
+            
+            size = len(user_websites)
+            user_seen_patterns = set() 
+
+            if size < 3: 
+                continue
+
+            for i in range(size - 2):
+                for j in range(i + 1, size - 1):
+                    for k in range(j + 1, size):
+                        curr_pattern = (user_websites[i], user_websites[j], user_websites[k])
+                                                
+                        if curr_pattern not in user_seen_patterns:
+                            user_seen_patterns.add(curr_pattern)
+                            scores[curr_pattern] += 1
+
+       
+        sorted_patterns = []
+        for pattern, count in scores.items():
+            sorted_patterns.append((-count, pattern)) 
+
+        sorted_patterns.sort() 
+
+        if sorted_patterns: 
+            max_pattern = sorted_patterns[0][1] 
+
+        return list(max_pattern)
