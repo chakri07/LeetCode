@@ -45,6 +45,54 @@ https://leetcode.com/problems/detonate-the-maximum-bombs
 
 from collections import defaultdict
 from typing import List
+from collections import defaultdict, deque
+
+# Bfs solution
+class Solution:
+    def maximumDetonation(self, bombs: List[List[int]]) -> int:
+        graph = defaultdict(list)
+
+        n = len(bombs)
+
+        for i in range(n):
+            for j in range(n):
+                if i == j:
+                    continue
+                # a point is in cirle if 
+
+                b1x, b1y, b1r = bombs[i]
+                b2x, b2y, b2r = bombs[j]
+                if (b1x- b2x) ** 2 + (b1y - b2y)** 2 <= b1r**2:
+                    # means inside
+                    graph[i].append(j)
+
+
+        def bfs(i):
+
+            visited = set()
+            queue = deque([i])
+            ans = 0
+            visited.add(i)
+            
+
+            while queue:
+                curr_bomb = queue.popleft()
+                ans += 1
+
+                for neigh in graph[curr_bomb]:
+                    if neigh not in visited:
+                        visited.add(neigh)
+                        queue.append(neigh)
+
+            return ans
+
+        final_ans = 0
+        for i in range(n):
+            final_ans = max(final_ans, bfs(i))
+
+        
+        return final_ans
+
 
 class Solution:
     def maximumDetonation(self, bombs: List[List[int]]) -> int:

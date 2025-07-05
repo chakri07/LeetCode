@@ -57,6 +57,41 @@ Explanation: The original source string is "a/*comment\nline\nmore_comment*/b", 
 https://leetcode.com/problems/remove-comments/description/
 """
 
+class Solution:
+    def removeComments(self, source: List[str]) -> List[str]:
+        in_block = False
+        result_lines = []
+        current_line_buffer = []
+
+        for line in source:
+            i = 0
+            while i < len(line):
+                if in_block:
+                    if i + 1 < len(line) and line[i:i+2] == '*/':
+                        in_block = False
+                        i += 2
+                    else:
+                        i += 1
+                else:
+                    # Check if there are at least 2 characters remaining for '//' or '/*'
+                    if i + 1 < len(line) and line[i:i+2] == '//':
+                        break # Line comment, ignore rest
+                    elif i + 1 < len(line) and line[i:i+2] == '/*':
+                        in_block = True
+                        i += 2
+                    else:
+                        # This handles single characters and cases where there aren't enough
+                        # characters for a 2-char comment sequence.
+                        current_line_buffer.append(line[i])
+                        i += 1
+
+            if not in_block and current_line_buffer:
+                result_lines.append("".join(current_line_buffer))
+                current_line_buffer = []
+
+        return result_lines
+
+
 class Solution(object):
     def removeComments(self, source):
         """

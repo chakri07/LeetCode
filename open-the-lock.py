@@ -32,9 +32,45 @@ Explanation: We cannot reach the target without getting stuck.
 https://leetcode.com/problems/open-the-lock/
 '''
 
+
+class Solution:
+    def openLock(self, deadends: List[str], target: str) -> int:
+
+        visited = set(deadends)
+        start = '0000'
+
+        # each position can ge forward or backward
+        queue = deque([start])
+
+        if '0000' in visited:
+            return -1
+        
+        visited.add('0000')
+
+        moves = 0 
+
+        while queue:
+            curr_level = len(queue)
+            for i in range(curr_level):
+                curr = queue.popleft()
+                if curr == target:
+                    return moves
+                
+                for i in range(4):
+                    digit = int(curr[i])
+                    for move in [-1, 1]:
+                        new_digit = (digit + move) % 10
+                        new_combo = curr[:i] + str(new_digit) + curr[i+1:]
+                        if new_combo not in visited:
+                            visited.add(new_combo)
+                            queue.append(new_combo)
+
+            moves += 1
+
+        return -1
+    
+
 import collections
-
-
 class Solution(object):
     def openLock(self, deadends, target):
         def neighbors(node):

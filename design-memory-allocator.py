@@ -47,13 +47,69 @@ At most 1000 calls will be made to allocate and freeMemory.
 https://leetcode.com/problems/design-memory-allocator
 """
 
-from collections import defaultdict
-from sortedContainer import SortedList
 
 class Allocator:
 
     def __init__(self, n: int):
-        self.freeBlocks = SortedList([(0, n-1)])
+        self.blocks = [] # it will store ranges ( start, end)
+        self.n = n
+
+    def allocate(self, size: int, mID: int) -> int:
+        new_block = [0,size]
+        if size <= 0 or size > self.n: # Added size <= 0 check
+            return -1
+
+        if not self.blocks:
+            # start, end, mID
+            self.blocks = [[0,size, mID]]
+            return 0
+
+        # lets see if we can see if block can sit in front
+        
+        if size <= self.blocks[0][0]:
+            self.blocks = [[0,size, mID]] + self.blocks
+            return 0 
+
+        for i in range(1, len(self.blocks)):
+            prev_start, prev_end, _ = self.blocks[i-1]
+            next_start, next_end, _ = self.blocks[i]
+            curr_start, curr_end = prev_end, prev_end+size
+
+            # mean we can insert the block in between
+            if curr_end <= next_start:
+                self.blocks = self.blocks[:i] + [[curr_start, curr_end, mID]] + self.blocks[i:]
+                return prev_end
+            # else just go to the next block state
+        
+        # see if the block will go at the end 
+        curr_start , curr_end = self.blocks[-1][1] , self.blocks[-1][1] + size
+        if curr_end <= self.n:
+            self.blocks +=  [[curr_start, curr_end, mID]]
+            return curr_start
+        
+        return -1
+
+
+    def freeMemory(self, mID: int) -> int:
+        new_memory = []
+        ans = 0
+        for i in range(len(self.blocks)):
+            _, _, mid = self.blocks[i]
+            if mid != mID:
+                new_memory.append(self.blocks[i])
+            else:
+                ans += (self.blocks[i][1] - self.blocks[i][0])
+
+        self.blocks = new_memory
+        return ans
+
+
+
+from collections import defaultdict
+class Allocator:
+
+    def __init__(self, n: int):
+        self.freeBlocks = SortedList([(0, n-1)]) # type: ignore
         self.busyBlocks = defaultdict(list)
 
     def allocate(self, size: int, mID: int) -> int:
