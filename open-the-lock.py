@@ -31,7 +31,8 @@ Explanation: We cannot reach the target without getting stuck.
 
 https://leetcode.com/problems/open-the-lock/
 '''
-
+from collections import defaultdict
+from typing import List
 
 class Solution:
     def openLock(self, deadends: List[str], target: str) -> int:
