@@ -1,0 +1,159 @@
+"""
+A circuit breaker is used to:
+- Avoid making requests to a resource if requests have recently failed
+- Protect the resource if it is overloaded
+
+
+A circuit breaker achieves this by wrapping function calls and monitoring
+failures. If the failures reach a certain threshold, the circuit breaker will
+switch from the "closed" state to the "open" state. In the "open" state,
+requests are rejected and not sent to the underlying resource.
+
+LIBRARY REQUIREMENTS
+- Pretend the library user has a database system with two replicas: a primary
+  replica and a fallback replica
+- Write a library that wraps each replica with its own independent circuit
+  breaker
+- First, send the request to the primary replica. If that fails, send the
+  request to the fallback replica.
+
+REQUIREMENTS FOR EACH INDIVIDUAL CIRCUIT BREAKER
+- Two states:
+    - Closed (accepting requests)
+    - Open (rejecting requests)
+- State transitions:
+    - Closed --> Open: last 2 requests failed
+    - Open --> Closed: last 2 requests were rejected by the circuit breaker
+
+API SPECIFICATION (pseudocode)
+class DoubleBreaker {
+    // Library user will provide the implementation for `make_request`.
+    // `make_request` allows the library user to configure what happens when a database receives 
+    // the request, but not whether the primary or fallback replica receives the request.
+    // Feel free to change the interface to pass in an object instead.
+    function call(
+        make_request: (is_for_primary_replica: bool) -> DatabaseResult
+    ) -> CircuitBreakerResult {
+        // Implement this
+    }
+}
+class CircuitBreakerResult {
+    accepted: bool // Whether request was accepted or rejected
+    database_result: DatabaseResult // Null if accepted = false
+}
+class DatabaseResult {
+    succeeded: bool // Whether we successfully reached the database
+    data: int // Null if succeeded = false
+}
+
+# EXAMPLE
+double_breaker = DoubleBreaker()
+function make_request_example(is_for_primary_replica: bool) -> DatabaseResult {
+    if is_for_primary_replica {
+        return DatabaseResult { succeeded: false, data: null }
+    } else {
+        return DatabaseResult { succeeded: true, data: 10 }
+    }
+}
+result: CircuitBreakerResult = double_breaker.call(make_request_example)
+print(result.database_result.data) // prints "10"
+"""
+
+
+def make_request_example(is_for_primary_replica):
+    pass
+
+
+class DatabaseResult:
+    def __init__(self, success=False, data = None) -> None:
+        self.succeeded= success   # Whether we successfully reached the database
+        self.data = data        # Null if succeeded = false
+
+class CircuitBreakerResult:
+    def __init__(self,  result: DatabaseResult, accepted = False) -> None:
+        self.accepted= accepted    # Whether request was accepted or rejected
+        self.base_result = result # Null if accepted = false
+
+
+
+OPEN = 'Open' # rejecting requests
+CLOSED = 'Closed' # accepting requests
+
+def make_request(is_for_primary_replica):
+    return DatabaseResult()
+
+class CircuitBreaker:
+    def __init__(self) -> None:
+        self.state = CLOSED
+        self.prev_results = True
+        self.rejected_requests_count = 0
+
+    def call(self,make_request,is_for_primary_replica):
+        if self.state == CLOSED:
+            result= make_request(is_for_primary_replica)
+            cbResult = CircuitBreakerResult(result)
+
+            # lets check the result
+            if not result.succeeded and not self.prev_results:
+                self.state = OPEN
+
+            self.prev_results = result.succeeded
+            cbResult.base_result = result
+            cbResult.accepted = True
+            return cbResult
+        else:
+            # open state
+            self.rejected_requests_count += 1
+            if self.rejected_requests_count == 2:
+                self.state = CLOSED
+                self.rejected_requests_count = 0 
+
+            return CircuitBreakerResult(DatabaseResult())
+
+class DoubleBreaker:
+
+    def __init__(self) -> None:
+        self.cb1 = CircuitBreaker()
+        self.cb2 = CircuitBreaker()
+
+
+    def call(self, make_request):
+        
+        result1 = self.cb1.call(make_request, True)
+
+        if not result1.base_result.succeeded:
+            result2 = self.cb2.call(make_request, False)
+            return result2
+        else:
+            return result1
+
+# EXAMPLE
+"""
+double_breaker = DoubleBreaker()
+function make_request_example(is_for_primary_replica: bool) -> DatabaseResult {
+    if is_for_primary_replica {
+        return DatabaseResult { succeeded: false, data: null }
+    } else {
+        return DatabaseResult { succeeded: true, data: 10 }
+    }
+}
+result: CircuitBreakerResult = double_breaker.call(make_request_example)
+print(result.database_result.data) // prints "10"
+"""
+
+test = DoubleBreaker()
+success = DatabaseResult(True,1)
+Failure = DatabaseResult(False,None)
+
+# this data base interface
+def test_make_request_func(is_for_primary_replica):
+    if is_for_primary_replica:
+        return success
+    else:
+        return success
+
+
+result = test.call(test_make_request_func)
+print(result.base_result.data)
+
+
